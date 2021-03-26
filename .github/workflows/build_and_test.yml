@@ -26,6 +26,7 @@ jobs:
         run: |
           sudo apt-get install texlive texlive-latex-extra
           pip install -e .
+          python -m pip install git+https://github.com/PSLmodels/OG-USA.git
           pip install pytest-cov
           pip install pytest-pycodestyle
       - name: Test
