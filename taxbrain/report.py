@@ -4,19 +4,12 @@ import behresp
 import taxbrain
 import taxcalc as tc
 from pathlib import Path
-# from taxbrain.report_utils import (
-#     form_intro, form_baseline_intro, write_text, date,
-#     largest_tax_change, notable_changes,
-#     behavioral_assumptions, consumption_assumptions,
-#     policy_table, convert_table, growth_assumptions,
-#     md_to_pdf, DIFF_TABLE_ROW_NAMES,
-#     dollar_str_formatting)
 from taxbrain.report_utils import (
     form_intro, form_baseline_intro, write_text, date,
     largest_tax_change, notable_changes,
     behavioral_assumptions, consumption_assumptions,
     policy_table, convert_table, growth_assumptions,
-    DIFF_TABLE_ROW_NAMES,
+    md_to_pdf, DIFF_TABLE_ROW_NAMES,
     dollar_str_formatting)
 
 
@@ -158,7 +151,7 @@ def report(tb, name=None, change_threshold=0.05, description=None,
 
     if verbose:
         print("Writing Summary")
-    agg_table = tb.weighted_totals("combined").fillna(0)
+    agg_table = tb.weighted_totals("combined", include_total=True).fillna(0)
     rev_change = agg_table.loc["Difference"].sum()
     rev_direction = "increase"
     if rev_change < 0:
@@ -211,8 +204,8 @@ def report(tb, name=None, change_threshold=0.05, description=None,
 
     # aggregate table by tax type
     tax_vars = ["iitax", "payrolltax", "combined"]
-    agg_base = tb.multi_var_table(tax_vars, "base")
-    agg_reform = tb.multi_var_table(tax_vars, "reform")
+    agg_base = tb.multi_var_table(tax_vars, "base", include_total=True)
+    agg_reform = tb.multi_var_table(tax_vars, "reform", include_total=True)
     agg_diff = agg_reform - agg_base
     agg_diff.index = ["Income Tax", "Payroll Tax", "Combined"]
     agg_diff *= 1e-9
