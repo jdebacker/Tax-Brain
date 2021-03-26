@@ -47,7 +47,7 @@ def make_tables(tb, year, outpath):
 
 
 def cli_core(startyear, endyear, data, usecps, reform, behavior, assump,
-             baseline, outdir, name, ogusa, make_report, author):
+             baseline, outdir, name, run_ogusa, make_report, author):
     """
     Core logic for the CLI
 
@@ -67,6 +67,8 @@ def cli_core(startyear, endyear, data, usecps, reform, behavior, assump,
         behavioral assumptions for Behavioral-Responses
     assump: dict
         consumption assumptions
+    run_ogusa: bool
+        whether to use run OG-USA to update macro forecast for reform
     base_policy: dict
         parameter changes (relative to current law baseline) for baseline
         policy
@@ -81,7 +83,7 @@ def cli_core(startyear, endyear, data, usecps, reform, behavior, assump,
     tb = TaxBrain(
         start_year=startyear, end_year=endyear, microdata=data,
         use_cps=usecps, reform=reform, behavior=behavior,
-        assump=assump, ogusa=ogusa, base_policy=baseline, verbose=True
+        assump=assump, run_ogusa=run_ogusa, base_policy=baseline, verbose=True
     )
     tb.run()
 
@@ -234,7 +236,7 @@ def cli_main():
     cli_core(
         args.startyear, args.endyear, args.data, args.usecps, args.reform,
         args.behavior, args.assump, args.baseline, args.outdir, args.name,
-        args.ogusa, args.author, args.report
+        args.run_ogusa, args.author, args.report
     )
 
 

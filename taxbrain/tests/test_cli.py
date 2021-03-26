@@ -17,12 +17,12 @@ def test_cli():
     baseline = None
     outdir = ""
     name = "test_cli"
-    ogusa = False
+    run_ogusa = False
     make_report = False
     author = None
     cli_core(
         startyear, endyear, data, usecps, reform, behavior, assump, baseline,
-        outdir, name, ogusa, make_report, author
+        outdir, name, run_ogusa, make_report, author
     )
     outpath = Path(outdir, name)
     # assert that all folders and files have been created
